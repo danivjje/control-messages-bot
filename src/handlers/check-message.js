@@ -1,15 +1,24 @@
-const getGifId = require('../helpers/get-gif-id');
+const getFileId = require('../helpers/get-file-id');
 
-const checkMessage = async (ctx, dangerMessages, dangerGifs) => {
+const checkMessage = async (ctx, dangerMessages, dangerGifs, dangerStickers) => {
     if (ctx.message.animation) {
-        const gifUrl = await getGifId(ctx);
-        if (dangerGifs.includes(gifUrl)) ctx.deleteMessage(ctx.message.message_id);
-    } else {
-        const message = ctx.message.text.toLowerCase();
-        ctx.reply(ctx.message)
+        const gifUrl = await getFileId(ctx, 'gif');
+        if (dangerGifs.includes(gifUrl)) {
+            return ctx.deleteMessage(ctx.message.message_id);
+        }
+    }
 
+    if (ctx.message.sticker) {
+        const stickerUrl = await getFileId(ctx, 'sticker');
+        if (dangerStickers.includes(stickerUrl)) {
+            return ctx.deleteMessage(ctx.message.message_id);
+        }
+    }
+
+    if (ctx.message.text) {
+        const message = ctx.message.text.toLowerCase();
         if (dangerMessages.some(item => message.search(item) !== -1)) {
-            ctx.deleteMessage(ctx.message.message_id);
+            return ctx.deleteMessage(ctx.message.message_id);
         }
     }
 }
