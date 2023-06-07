@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/core/bot.js"
+    "start": "node src/core/bot.js",
+    "now-start": "node src/core/bot.js"
   },
   "keywords": [],
   "author": "",
