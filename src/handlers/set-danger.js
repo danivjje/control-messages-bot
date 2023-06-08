@@ -12,7 +12,7 @@ const setDanger = async (ctx, dangerGifs, dangerStickers, chatReference, bot) =>
                     if (!dangerStickers.some(sticker => sticker.link === url)) {
                         await postData(`chats/${chatReference}/stickers`, { link: url });
                         dangerStickers.push({ link: url });
-                        return ctx.reply('succesfully');
+                        return ctx.reply('запретил');
                     }
 
                     return ctx.reply('этот стикер уже запрещён');
@@ -23,7 +23,7 @@ const setDanger = async (ctx, dangerGifs, dangerStickers, chatReference, bot) =>
                     if (!dangerGifs.some(gif => gif.link === url)) {
                         await postData(`chats/${chatReference}/gifs`, { link: url });
                         dangerGifs.push({ link: url });
-                        return ctx.reply('succesfully');
+                        return ctx.reply('запретил');
                     }
 
                     return ctx.reply('эта гифка уже запрещена');
