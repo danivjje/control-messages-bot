@@ -2,6 +2,7 @@ require('dotenv').config()
 const { Telegraf } = require('telegraf');
 
 const { postChat, getData, getChat } = require('../api/firebase');
+const keepAlive = require('./server');
 const clearDangerList = require('../handlers/clear-danger-list');
 const checkMessage = require('../handlers/check-message');
 const setDangerMessages = require('../handlers/set-danger-messages');
@@ -49,6 +50,7 @@ bot.command('clear_stickers', async (ctx) => clearDangerList(ctx, chatReference,
 
 bot.on('message', (ctx) => checkMessage(ctx, dangerMessages, dangerGifs, dangerStickers));
 bot.launch();
+keepAlive();
 
 async function setArrays() {
     getData(`chats/${chatReference}/messages`).then(result => dangerMessages.push(...Object.values(result).slice(1)));
