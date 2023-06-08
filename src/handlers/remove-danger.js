@@ -15,13 +15,13 @@ const removeDanger = async (ctx, dangerGifs, dangerStickers, chatReference) => {
                         await getData(`chats/${chatReference}/gifs`).then(result => gifsKeys.push(...Object.keys(result)));
                         await removeData(`chats/${chatReference}/gifs/${gifsKeys[urlIndex]}`);
 
-                        return ctx.reply('succesfully');
+                        return ctx.reply('разрешил');
                     } catch {
                         return ctx.reply('unknown error, @danivjje');
                     }
                 }
 
-                return ctx.reply(`gif doesnt set as dangerous`);
+                return ctx.reply('гифка не запрещена');
             }
 
             if (ctx.message.reply_to_message.sticker) {
@@ -30,22 +30,22 @@ const removeDanger = async (ctx, dangerGifs, dangerStickers, chatReference) => {
                     try {
                         dangerStickers.splice(dangerStickers.findIndex(item => item.link === url), 1);
                         await removeData();
-                        return ctx.reply('succesfully');
+                        return ctx.reply('разрешил');
                     } catch {
                         return ctx.reply('unknown error, @danivjje');
                     }
                 }
 
-                return ctx.reply('sticker doesnt set as dangerous');
+                return ctx.reply('стикер не запрещён');
             }
 
-            return ctx.reply('not a gif/sticker');
+            return ctx.reply('не гифка/стикер');
         }
 
-        return ctx.reply('for remove any gif/sticker from dangerous list - use /remove_danger as reply for gif/sticker');
+        return ctx.reply('чтобы запретить гифку/стикер нужно ответить на неё командой');
     }
 
-    return 'chat is not registered, use /register_chat';
+    return 'сначала /register_chat';
 }
 
 module.exports = removeDanger;

@@ -12,7 +12,7 @@ const setDanger = async (ctx, dangerGifs, dangerStickers, chatReference) => {
                     return ctx.reply('succesfully');
                 }
 
-                return ctx.reply('this sticker is already set as dangerous');
+                return ctx.reply('этот стикер уже запрещён');
             }
 
             if (ctx.message.reply_to_message.animation) {
@@ -23,16 +23,16 @@ const setDanger = async (ctx, dangerGifs, dangerStickers, chatReference) => {
                     return ctx.reply('succesfully');
                 }
 
-                return ctx.reply('this gif is already set as dangerous');
+                return ctx.reply('эта гифка уже запрещена');
             }
 
-            return ctx.reply('not a gif/sticker');
+            return ctx.reply('не гифка/стикер');
         }
 
-        return ctx.reply('for set any gif/sticker as dangerous - use /set_danger as reply for gif/sticker');
+        return ctx.reply('чтобы запретить гифку/стикер нужно ответить командой на неё');
     }
 
-    return ctx.reply('chat is not registered, use /register_chat');
+    return ctx.reply('сначала /register_chat');
 }
 
 module.exports = setDanger;

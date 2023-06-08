@@ -24,7 +24,7 @@ bot.command('register_chat', async (ctx) => {
             try {
                 await postChat(id);
                 chatReference = id;
-                return ctx.reply('succesfully (registration)');
+                return ctx.reply('успешная регистрация');
             } catch {
                 return ctx.reply('unknown error (@danivjje)');
             }
@@ -32,10 +32,10 @@ bot.command('register_chat', async (ctx) => {
 
         chatReference = id;
         await setArrays();
-        return ctx.reply('succesfully (authorization)');
+        return ctx.reply('успешная авторизация');
     }
 
-    return ctx.reply('chat is already registered');
+    return ctx.reply('уже');
 });
 
 bot.command('set_messages', (ctx) => setDangerMessages(ctx, dangerMessages, chatReference));

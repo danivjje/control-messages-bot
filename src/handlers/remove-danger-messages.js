@@ -3,7 +3,7 @@ const { removeData, getData } = require('../api/firebase');
 const removeDangerMessages = async (ctx, dangerMessages, chatReference) => {
     if (chatReference) {
         const messages = ctx.message.text.split(' ').slice(1);
-        if (messages.length < 1) return ctx.reply('enter anything after /remove_messages');
+        if (messages.length < 1) return ctx.reply('введи запрещённые слова после /remove_messages');
 
 
         if (dangerMessages.some(item => messages.includes(item.title))) {
@@ -26,16 +26,16 @@ const removeDangerMessages = async (ctx, dangerMessages, chatReference) => {
                     }
                 }
 
-                return await ctx.reply(`${removedMessages.join(', ')} were succesfully removed from the list of dangerous messages`);
+                return await ctx.reply(`слова ${removedMessages.join(', ')} были успешно удалены из списка запрещённых сообщений`);
             } catch {
                 return ctx.reply('unknown error, @danivjje');
             }
         }
 
-        return ctx.reply('these messages is not set as dangerous');
+        return ctx.reply('не установлены как запрещённые');
     }
 
-    return ctx.reply('chat is not registered, use /register_chat');
+    return ctx.reply('сначала /register_chat');
 }
 
 module.exports = removeDangerMessages;
