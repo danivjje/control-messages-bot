@@ -9,8 +9,10 @@ const setDangerMessages = require('../handlers/set-danger-messages');
 const removeDangerMessages = require('../handlers/remove-danger-messages');
 const setDanger = require('../handlers/set-danger');
 const removeDanger = require('../handlers/remove-danger');
+const allowForCreator = require('../handlers/allow-for-creator');
 
 let chatReference = '';
+const isAllowForCreator = [false];
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
 const dangerMessages = [];
@@ -39,6 +41,7 @@ bot.command('register_chat', async (ctx) => {
     return ctx.reply('уже');
 });
 
+bot.command('allow_for_creator', (ctx) => allowForCreator(ctx, chatReference, bot, isAllowForCreator));
 bot.command('set_messages', (ctx) => setDangerMessages(ctx, dangerMessages, chatReference, bot));
 bot.command('remove_messages', (ctx) => removeDangerMessages(ctx, dangerMessages, chatReference, bot));
 bot.command('set_danger', (ctx) => setDanger(ctx, dangerGifs, dangerStickers, chatReference, bot));
@@ -48,7 +51,7 @@ bot.command('clear_messages', async (ctx) => clearDangerList(ctx, chatReference,
 bot.command('clear_gifs', async (ctx) => clearDangerList(ctx, chatReference, 'gifs', dangerGifs, bot));
 bot.command('clear_stickers', async (ctx) => clearDangerList(ctx, chatReference, 'stickers', dangerStickers, bot));
 
-bot.on('message', (ctx) => checkMessage(ctx, dangerMessages, dangerGifs, dangerStickers));
+bot.on('message', (ctx) => checkMessage(ctx, dangerMessages, dangerGifs, dangerStickers, bot, isAllowForCreator));
 bot.launch();
 keepAlive();
 
