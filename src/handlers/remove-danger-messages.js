@@ -1,10 +1,10 @@
 const { removeData, getData } = require('../api/firebase');
 const checkStatus = require('../helpers/check-status');
 
-const removeDangerMessages = async (ctx, dangerMessages, chatReference, bot) => {
+const removeDangerMessages = async (ctx, dangerMessages, chatReference, bot, adminsList) => {
     if (chatReference) {
         const isCreator = await checkStatus(ctx, bot);
-        if (isCreator) {
+        if (isCreator || adminsList.some(item => item.id == ctx.message.from.id)) {
             const messages = ctx.message.text.split(' ').slice(1);
             if (messages.length < 1) return ctx.reply('введи запрещённые слова после /remove_messages');
 

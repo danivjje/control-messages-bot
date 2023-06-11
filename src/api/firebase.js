@@ -35,6 +35,7 @@ const postChat = async (id) => {
     postData(`chats/${id}/messages`, { registered: true });
     postData(`chats/${id}/stickers`, { registered: true });
     postData(`chats/${id}/gifs`, { registered: true });
+    postData(`chats/${id}/admins`, { registered: true });
 }
 
 const clearList = async (id, list) => {
@@ -48,6 +49,31 @@ const removeData = async (link) => {
     remove(reference);
 };
 
+const setAdmin = async (chat, user) => {
+    const reference = ref(database, `chats/${chat}/admins`);
+    const link = push(reference);
+    return await set(link, { id: user });
+}
+
+const removeAdmin = async (chat, user) => {
+    const reference = ref(database, `chats/${chat}/admins/${user}`);
+    return await remove(reference);
+}
+
+const changeAdminStatus = async (chat, status) => {
+    const reference = ref(database, `chats/${chat}/admin-status`);
+    set(reference, { status: status });
+}
+
+const getAdminStatus = async (chat) => {
+    const reference = ref(database, `chats/${chat}/admin-status`);
+    return await get(reference).then(result => result.toJSON());
+}
+
 module.exports = {
-    getData, postData, postChat, getChat, clearList, removeData
+    getData, postData, removeData,
+    postChat, getChat,
+    clearList,
+    setAdmin, removeAdmin,
+    changeAdminStatus, getAdminStatus
 };

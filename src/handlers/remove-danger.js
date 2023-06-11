@@ -2,10 +2,10 @@ const getFileId = require('../helpers/get-file-id');
 const checkStatus = require('../helpers/check-status');
 const { removeData, getData } = require('../api/firebase');
 
-const removeDanger = async (ctx, dangerGifs, dangerStickers, chatReference, bot) => {
+const removeDanger = async (ctx, dangerGifs, dangerStickers, chatReference, bot, adminsList) => {
     if (chatReference) {
         const isCreator = await checkStatus(ctx, bot);
-        if (isCreator) {
+        if (isCreator || adminsList.some(item => item.id == ctx.message.from.id)) {
             if (ctx.message.reply_to_message) {
                 if (ctx.message.reply_to_message.animation) {
                     const url = await getFileId(ctx, 'gif', true);

@@ -1,11 +1,10 @@
 const getFileId = require('../helpers/get-file-id');
 const checkStatus = require('../helpers/check-status');
 
-const checkMessage = async (ctx, dangerMessages, dangerGifs, dangerStickers, bot, isAllowForCreator) => {
-
-    if (isAllowForCreator[0]) {
+const checkMessage = async (ctx, dangerMessages, dangerGifs, dangerStickers, bot, isAllowForAdmins, adminsList) => {
+    if (isAllowForAdmins[0]) {
         const isCreator = await checkStatus(ctx, bot);
-        if (!isCreator) check();
+        if (!isCreator && !adminsList.some(item => item.id == ctx.message.from.id)) check();
     } else check();
 
     async function check() {

@@ -2,8 +2,8 @@ const getFileId = require('../helpers/get-file-id');
 const checkStatus = require('../helpers/check-status');
 const { postData } = require('../api/firebase');
 
-const setDanger = async (ctx, dangerGifs, dangerStickers, chatReference, bot) => {
-    if (chatReference) {
+const setDanger = async (ctx, dangerGifs, dangerStickers, chatReference, bot, adminsList) => {
+    if (chatReference || adminsList.some(item => item.id == ctx.message.from.id)) {
         const isCreator = await checkStatus(ctx, bot);
         if (isCreator) {
             if (ctx.message.reply_to_message) {
